@@ -8,4 +8,8 @@ it('prints an info message', () => {
   logger.warn('exceeding memory limit')
   logger.error('failed to find a valid parser')
   logger.success('finished parsing!')
+
+  const log = logger.extend('normalizeArgs')
+  log.warn('footer')
+  log.info('got argument')
 })

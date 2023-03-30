@@ -16,8 +16,18 @@ export interface LogEntry {
 export class Logger {
   private prefix: string
 
-  constructor(public readonly name: string) {
+  constructor(
+    private readonly name: string,
+    private readonly scopes?: Array<string>
+  ) {
     this.prefix = `[${this.name}]`
+  }
+
+  public extend(domain: string): Logger {
+    return new Logger(
+      this.name,
+      Array.prototype.concat([], this.scopes || [], domain)
+    )
   }
 
   public info(message: string): void {
@@ -97,6 +107,7 @@ export class Logger {
     write(
       [colorize.timestamp(this.formatTimestamp(entry.timestamp))]
         .concat(prefix != null ? colorize.prefix(prefix) : [])
+        .concat(this.scopes?.map((scope) => `[${scope}]`) || [])
         .concat(message)
         .join(' ')
     )
