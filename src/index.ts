@@ -4,8 +4,9 @@ import * as colors from './colors'
 const IS_NODE = isNodeProcess()
 
 const LOGGER_NAME = getVariable('DEBUG')
+const LOGGER_LEVEL = getVariable('LOG_LEVEL') as LogLevel | undefined
 
-export type LogLevel = 'debug' | 'info' | 'warn' | 'error' | 'silent'
+export type LogLevel = 'debug' | 'info' | 'success' | 'warn' | 'error'
 
 export type LogColors = keyof typeof colors
 
@@ -21,11 +22,24 @@ export class Logger {
   constructor(private readonly name: string) {
     this.prefix = `[${this.name}]`
 
-    const isLoggingEnabled = LOGGER_NAME === '1' || LOGGER_NAME === 'true'
-    const hasMatchingLogger =
-      typeof LOGGER_NAME !== 'undefined' && this.name.startsWith(LOGGER_NAME)
+    const isLoggingEnabled =
+      LOGGER_NAME === '1' ||
+      LOGGER_NAME === 'true' ||
+      (typeof LOGGER_NAME !== 'undefined' && this.name.startsWith(LOGGER_NAME))
 
-    if (!isLoggingEnabled && !hasMatchingLogger) {
+    if (isLoggingEnabled) {
+      this.debug = isDefinedAndNotEquals(LOGGER_LEVEL, 'debug')
+        ? noop
+        : this.debug
+      this.info = isDefinedAndNotEquals(LOGGER_LEVEL, 'info') ? noop : this.info
+      this.success = isDefinedAndNotEquals(LOGGER_LEVEL, 'success')
+        ? noop
+        : this.success
+      this.warn = isDefinedAndNotEquals(LOGGER_LEVEL, 'warn') ? noop : this.warn
+      this.error = isDefinedAndNotEquals(LOGGER_LEVEL, 'error')
+        ? noop
+        : this.error
+    } else {
       this.info = noop
       this.success = noop
       this.warn = noop
@@ -35,6 +49,17 @@ export class Logger {
 
   public extend(domain: string): Logger {
     return new Logger(`${this.name}:${domain}`)
+  }
+
+  public debug(message: string): void {
+    this.logEntry({
+      level: 'debug',
+      message: colors.gray(message),
+      prefix: this.prefix,
+      colors: {
+        prefix: 'gray',
+      },
+    })
   }
 
   public info(message: string): void {
@@ -150,4 +175,11 @@ function getVariable(variableName: string): string | undefined {
   }
 
   return globalThis[variableName]
+}
+
+function isDefinedAndNotEquals(
+  value: string | undefined,
+  expected: string
+): boolean {
+  return value !== undefined && value !== expected
 }

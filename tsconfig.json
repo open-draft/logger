@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
     "target": "esnext",
-    "types": ["vitest/types"]
+    "types": ["vitest/types"],
+    "moduleResolution": "nodenext"
   },
   "include": ["src"],
   "exclude": ["node_modules"]
