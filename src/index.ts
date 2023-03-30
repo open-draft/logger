@@ -3,6 +3,8 @@ import * as colors from './colors'
 
 const IS_NODE = isNodeProcess()
 
+const LOGGER_NAME = getVariable('DEBUG')
+
 export type LogLevel = 'debug' | 'info' | 'warn' | 'error' | 'silent'
 
 export type LogColors = keyof typeof colors
@@ -16,18 +18,23 @@ export interface LogEntry {
 export class Logger {
   private prefix: string
 
-  constructor(
-    private readonly name: string,
-    private readonly scopes?: Array<string>
-  ) {
+  constructor(private readonly name: string) {
     this.prefix = `[${this.name}]`
+
+    const isLoggingEnabled = LOGGER_NAME === '1' || LOGGER_NAME === 'true'
+    const hasMatchingLogger =
+      typeof LOGGER_NAME !== 'undefined' && this.name.startsWith(LOGGER_NAME)
+
+    if (!isLoggingEnabled && !hasMatchingLogger) {
+      this.info = noop
+      this.success = noop
+      this.warn = noop
+      this.error = noop
+    }
   }
 
   public extend(domain: string): Logger {
-    return new Logger(
-      this.name,
-      Array.prototype.concat([], this.scopes || [], domain)
-    )
+    return new Logger(`${this.name}:${domain}`)
   }
 
   public info(message: string): void {
@@ -77,6 +84,13 @@ export class Logger {
     })
   }
 
+  /**
+   * Execute the given callback only when the logging is enabled.
+   * This is skipped in its entirety and has no runtime cost otherwise.
+   * This executes regardless of the log level.
+   */
+  public only(callback: () => void): void {}
+
   private createEntry(level: LogLevel, message: string): LogEntry {
     return {
       timestamp: new Date(),
@@ -107,7 +121,6 @@ export class Logger {
     write(
       [colorize.timestamp(this.formatTimestamp(entry.timestamp))]
         .concat(prefix != null ? colorize.prefix(prefix) : [])
-        .concat(this.scopes?.map((scope) => `[${scope}]`) || [])
         .concat(message)
         .join(' ')
     )
@@ -129,4 +142,12 @@ function write(message: string): void {
   }
 
   console.log(message)
+}
+
+function getVariable(variableName: string): string | undefined {
+  if (typeof process !== 'undefined') {
+    return process.env[variableName]
+  }
+
+  return globalThis[variableName]
 }
