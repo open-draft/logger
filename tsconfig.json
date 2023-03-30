@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "esnext",
-    "types": ["vitest/types"],
+    "types": ["vitest/globals"],
     "moduleResolution": "nodenext"
   },
   "include": ["src"],

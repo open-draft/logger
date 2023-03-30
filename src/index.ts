@@ -143,6 +143,8 @@ export class Logger {
       prefix: colors[prefixColor],
     }
 
+    const write = this.getWriter(level)
+
     write(
       [colorize.timestamp(this.formatTimestamp(entry.timestamp))]
         .concat(prefix != null ? colorize.prefix(prefix) : [])
@@ -156,17 +158,51 @@ export class Logger {
       'en-GB'
     )}:${timestamp.getMilliseconds()}`
   }
+
+  private getWriter(level: LogLevel) {
+    switch (level) {
+      case 'debug':
+      case 'success':
+      case 'info': {
+        return log
+      }
+      case 'warn': {
+        return warn
+      }
+      case 'error': {
+        return error
+      }
+    }
+  }
 }
 
 const noop = () => void 0
 
-function write(message: string): void {
+function log(message: string): void {
   if (IS_NODE) {
     process.stdout.write(message + '\n')
     return
   }
 
   console.log(message)
+}
+
+function warn(message: string): void {
+  if (IS_NODE) {
+    process.stderr.write(message + '\n')
+    return
+  }
+
+  console.warn(message)
+}
+
+function error(message: string): void {
+  if (IS_NODE) {
+    process.stderr.write(message + '\n')
+    return
+  }
+
+  console.error(message)
 }
 
 function getVariable(variableName: string): string | undefined {
