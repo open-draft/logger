@@ -3,7 +3,7 @@ import * as colors from './colors'
 
 const IS_NODE = isNodeProcess()
 
-export type LogLevel = 'debug' | 'info' | 'success' | 'warn' | 'error'
+export type LogLevel = 'debug' | 'info' | 'success' | 'warning' | 'error'
 
 export type LogColors = keyof typeof colors
 
@@ -35,14 +35,16 @@ export class Logger {
       this.success = isDefinedAndNotEquals(LOGGER_LEVEL, 'success')
         ? noop
         : this.success
-      this.warn = isDefinedAndNotEquals(LOGGER_LEVEL, 'warn') ? noop : this.warn
+      this.warning = isDefinedAndNotEquals(LOGGER_LEVEL, 'warning')
+        ? noop
+        : this.warning
       this.error = isDefinedAndNotEquals(LOGGER_LEVEL, 'error')
         ? noop
         : this.error
     } else {
       this.info = noop
       this.success = noop
-      this.warn = noop
+      this.warning = noop
       this.error = noop
       this.only = noop
     }
@@ -118,11 +120,11 @@ export class Logger {
   /**
    * Print a warning.
    * @example
-   * logger.warn('found legacy document format')
+   * logger.warning('found legacy document format')
    */
-  public warn(message: string): void {
+  public warning(message: string): void {
     this.logEntry({
-      level: 'warn',
+      level: 'warning',
       message,
       prefix: `⚠ ${this.prefix}`,
       colors: {
@@ -212,7 +214,7 @@ export class Logger {
       case 'info': {
         return log
       }
-      case 'warn': {
+      case 'warning': {
         return warn
       }
       case 'error': {

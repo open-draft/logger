@@ -83,7 +83,7 @@ test('prints warning messages', async ({ page, consoleMessages }) => {
     globalThis.DEBUG = true
 
     const logger = new window.Logger('test')
-    logger.warn('double-check this')
+    logger.warning('double-check this')
   })
 
   expect(consoleMessages.get('warning')).toEqual([

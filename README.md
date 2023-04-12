@@ -17,6 +17,7 @@ npm install @open-draft/logger
 This package has the same API for both browser and Node.js and can run in those environments out of the box.
 
 ```js
+// app.js
 import { Logger } from '@open-draft/logger'
 
 const logger = new Logger('parser')
@@ -25,6 +26,14 @@ logger.info('starting parsing...')
 logger.warning('found legacy document format')
 logger.success('parsed 120 documents!')
 ```
+
+Logging is disabled by default. To enable logging, provide the `DEBUG` environment variable:
+
+```sh
+DEBUG=1 node ./app.js
+```
+
+> You can also use `true` instead of `1`. You can also use a specific logger's name to enable [logger filtering](#logger-filtering).
 
 ## API
 
@@ -151,3 +160,61 @@ logger.only(() => {
 ```
 
 > You can nest `logger.*` methods in the callback to `logger.only()`.
+
+## Log levels
+
+You can specify the log levels to print using the `LOG_LEVEL` environment variable.
+
+There are the following log levels:
+
+- `debug`
+- `info`
+- `success`
+- `warning`
+- `error`
+
+> Providing no log level will print all the messages.
+
+Here's an example of how to print only warnings:
+
+```js
+// app.js
+import { Logger } from '@open-draft/logger'
+
+const logger = new Logger('parser')
+
+logger.info('some info')
+logger.warning('some warning')
+logger.error('some error')
+```
+
+```js
+LOG_LEVEL=warning node ./app.js
+```
+
+```
+12:34:56:789 ⚠ [parser] some warning
+```
+
+## Logger filtering
+
+You can only print a specific logger by providing its name as the `DEBUG` environment variable.
+
+```js
+// app.js
+import { Logger } from '@open-draft/logger'
+
+const appLogger = new Logger('app')
+const parserLogger = new Logger('parser')
+
+appLogger.info('starting app...')
+parserLogger.info('creating a new parser...')
+```
+
+```sh
+DEBUG=app node ./app.js
+```
+
+```
+12:34:56:789 [app] starting app...
+```

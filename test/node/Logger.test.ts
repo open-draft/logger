@@ -51,7 +51,7 @@ it('prints a success message', () => {
 })
 
 it('prints a warning message', () => {
-  logger.warn('simple warning')
+  logger.warning('simple warning')
 
   expect(process.stderr.write).toHaveBeenCalledWith(
     `${colors.yellow('12:34:56:789')} ${colors.yellow(
