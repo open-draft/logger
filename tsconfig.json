@@ -4,6 +4,6 @@
     "types": ["vitest/globals"],
     "moduleResolution": "nodenext"
   },
-  "include": ["src"],
+  "include": ["src", "test"],
   "exclude": ["node_modules"]
 }

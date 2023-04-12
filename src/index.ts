@@ -62,7 +62,7 @@ export class Logger {
     })
   }
 
-  public info(message: string): void {
+  public info(message: string) {
     this.logEntry({
       level: 'info',
       message,
@@ -71,6 +71,20 @@ export class Logger {
         prefix: 'blue',
       },
     })
+
+    const performance = new PerformanceEntry()
+    return (message: string) => {
+      performance.measure()
+
+      this.logEntry({
+        level: 'info',
+        message: `${message} ${colors.gray(`${performance.deltaTime}ms`)}`,
+        prefix: this.prefix,
+        colors: {
+          prefix: 'blue',
+        },
+      })
+    }
   }
 
   public success(message: string): void {
@@ -173,6 +187,22 @@ export class Logger {
         return error
       }
     }
+  }
+}
+
+class PerformanceEntry {
+  private readonly startTime: number
+  public endTime: number
+  public deltaTime: string
+
+  constructor() {
+    this.startTime = performance.now()
+  }
+
+  public measure(): void {
+    this.endTime = performance.now()
+    const deltaTime = this.endTime - this.startTime
+    this.deltaTime = deltaTime.toFixed(2)
   }
 }
 
