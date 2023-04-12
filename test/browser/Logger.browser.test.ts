@@ -1,4 +1,4 @@
-import { test, expect } from '../playwright.extend'
+import { test, expect } from '../../playwright.extend'
 
 test('', async () => {
   // Open a scenario that uses the logger.
