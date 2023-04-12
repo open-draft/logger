@@ -39,11 +39,11 @@ DEBUG=1 node ./app.js
 
 - Class: `Logger`
   - [`new Logger(name)`](#new-loggername)
-  - [`logger.debug(message)`](#loggerdebugmessage)
-  - [`logger.info(message)`](#loggerinfomessage)
-  - [`logger.success(message)`](#loggersuccessmessage)
-  - [`logger.warning(message)`](#loggerwarningmessage)
-  - [`logger.error(message)`](#loggererrormessage)
+  - [`logger.debug(message, ...positionals)`](#loggerdebugmessage-positionals)
+  - [`logger.info(message, ...positionals)`](#loggerinfomessage-positionals)
+  - [`logger.success(message, ...positionals)`](#loggersuccessmessage-positionals)
+  - [`logger.warning(message, ...positionals)`](#loggerwarningmessage-positionals)
+  - [`logger.error(message, ...positionals)`](#loggererrormessage-positionals)
   - [`logger.extend(name)`](#loggerextendprefix)
   - [`logger.only(callback)`](#loggeronlycallback)
 
@@ -59,9 +59,10 @@ const logger = new Logger('parser')
 
 > You can nest loggers via [`logger.extend()`](#loggerextendprefix).
 
-### `logger.debug(message)`
+### `logger.debug(message, ...positionals)`
 
 - `message` `string`
+- `positionals` `unknown[]`
 
 Prints a debug message.
 
@@ -73,9 +74,10 @@ logger.debug('no duplicates found, skipping...')
 12:34:56:789 [parser] no duplicates found, skipping...
 ```
 
-### `logger.info(message)`
+### `logger.info(message, ...positionals)`
 
 - `message` `string`
+- `positionals` `unknown[]`
 
 Prints an info message.
 
@@ -87,9 +89,10 @@ logger.info('new parse request')
 12:34:56:789 [parser] new parse request
 ```
 
-### `logger.success(message)`
+### `logger.success(message, ...positionals)`
 
 - `message` `string`
+- `positionals` `unknown[]`
 
 Prints a success message.
 
@@ -101,9 +104,10 @@ logger.success('prased 123 documents!')
 12:34:56:789 ✔ [parser] prased 123 documents!
 ```
 
-### `logger.warning(message)`
+### `logger.warning(message, ...positionals)`
 
 - `message` `string`
+- `positionals` `unknown[]`
 
 Prints a warning. In Node.js, prints it to `process.stderr`.
 
@@ -115,9 +119,10 @@ logger.warning('found legacy document format')
 12:34:56:789 ⚠ [parser] found legacy document format
 ```
 
-### `logger.error(message)`
+### `logger.error(message, ...positionals)`
 
 - `message` `string`
+- `positionals` `unknown[]`
 
 Prints an error. In Node.js, prints it to `process.stderr`.
 
