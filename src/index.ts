@@ -59,10 +59,11 @@ export class Logger {
    * @example
    * logger.debug('no duplicates found, creating a document...')
    */
-  public debug(message: string): void {
+  public debug(message: string, ...positionals: Array<unknown>): void {
     this.logEntry({
       level: 'debug',
       message: colors.gray(message),
+      positionals,
       prefix: this.prefix,
       colors: {
         prefix: 'gray',
@@ -75,10 +76,11 @@ export class Logger {
    * @example
    * logger.info('start parsing...')
    */
-  public info(message: string) {
+  public info(message: string, ...positionals: Array<unknown>) {
     this.logEntry({
       level: 'info',
       message,
+      positionals,
       prefix: this.prefix,
       colors: {
         prefix: 'blue',
@@ -86,12 +88,14 @@ export class Logger {
     })
 
     const performance = new PerformanceEntry()
-    return (message: string) => {
+
+    return (message: string, ...positionals: Array<unknown>) => {
       performance.measure()
 
       this.logEntry({
         level: 'info',
         message: `${message} ${colors.gray(`${performance.deltaTime}ms`)}`,
+        positionals,
         prefix: this.prefix,
         colors: {
           prefix: 'blue',
@@ -105,10 +109,11 @@ export class Logger {
    * @example
    * logger.success('successfully created document')
    */
-  public success(message: string): void {
+  public success(message: string, ...positionals: Array<unknown>): void {
     this.logEntry({
       level: 'info',
       message,
+      positionals,
       prefix: `✔ ${this.prefix}`,
       colors: {
         timestamp: 'green',
@@ -122,10 +127,11 @@ export class Logger {
    * @example
    * logger.warning('found legacy document format')
    */
-  public warning(message: string): void {
+  public warning(message: string, ...positionals: Array<unknown>): void {
     this.logEntry({
       level: 'warning',
       message,
+      positionals,
       prefix: `⚠ ${this.prefix}`,
       colors: {
         timestamp: 'yellow',
@@ -139,10 +145,11 @@ export class Logger {
    * @example
    * logger.error('something went wrong')
    */
-  public error(message: string): void {
+  public error(message: string, ...positionals: Array<unknown>): void {
     this.logEntry({
       level: 'error',
       message,
+      positionals,
       prefix: `✖ ${this.prefix}`,
       colors: {
         timestamp: 'red',
@@ -175,6 +182,7 @@ export class Logger {
   private logEntry(args: {
     level: LogLevel
     message: string
+    positionals?: Array<unknown>
     prefix?: string
     colors?: {
       timestamp?: LogColors
@@ -182,7 +190,13 @@ export class Logger {
       message?: LogColors
     }
   }): void {
-    const { level, message, prefix, colors: customColors } = args
+    const {
+      level,
+      message,
+      prefix,
+      colors: customColors,
+      positionals = [],
+    } = args
     const entry = this.createEntry(level, message)
     const timestampColor = customColors?.timestamp || 'gray'
     const prefixColor = customColors?.prefix || 'gray'
@@ -197,7 +211,8 @@ export class Logger {
       [colorize.timestamp(this.formatTimestamp(entry.timestamp))]
         .concat(prefix != null ? colorize.prefix(prefix) : [])
         .concat(message)
-        .join(' ')
+        .join(' '),
+      ...positionals
     )
   }
 
@@ -242,31 +257,31 @@ class PerformanceEntry {
 
 const noop = () => void 0
 
-function log(message: string): void {
+function log(message: string, ...positionals: Array<unknown>): void {
   if (IS_NODE) {
     process.stdout.write(message + '\n')
     return
   }
 
-  console.log(message)
+  console.log(message, ...positionals)
 }
 
-function warn(message: string): void {
+function warn(message: string, ...positionals: Array<unknown>): void {
   if (IS_NODE) {
     process.stderr.write(message + '\n')
     return
   }
 
-  console.warn(message)
+  console.warn(message, ...positionals)
 }
 
-function error(message: string): void {
+function error(message: string, ...positionals: Array<unknown>): void {
   if (IS_NODE) {
     process.stderr.write(message + '\n')
     return
   }
 
-  console.error(message)
+  console.error(message, ...positionals)
 }
 
 /**

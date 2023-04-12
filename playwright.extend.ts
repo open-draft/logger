@@ -31,7 +31,13 @@ Date.now = () => __DateNow() + __DateNowOffset;
     const messages = new Map()
     page.on('console', (message) => {
       const prevMessages = messages.get(message.type()) || []
-      messages.set(message.type(), prevMessages.concat(message.text()))
+      const text = message
+        .text()
+        .replace(
+          /[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g,
+          ''
+        )
+      messages.set(message.type(), prevMessages.concat(text))
     })
 
     await use(messages)
