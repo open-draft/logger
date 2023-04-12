@@ -44,6 +44,7 @@ export class Logger {
       this.success = noop
       this.warn = noop
       this.error = noop
+      this.only = noop
     }
   }
 
@@ -51,6 +52,11 @@ export class Logger {
     return new Logger(`${this.name}:${domain}`)
   }
 
+  /**
+   * Print a debug message.
+   * @example
+   * logger.debug('no duplicates found, creating a document...')
+   */
   public debug(message: string): void {
     this.logEntry({
       level: 'debug',
@@ -62,6 +68,11 @@ export class Logger {
     })
   }
 
+  /**
+   * Print an info message.
+   * @example
+   * logger.info('start parsing...')
+   */
   public info(message: string) {
     this.logEntry({
       level: 'info',
@@ -87,6 +98,11 @@ export class Logger {
     }
   }
 
+  /**
+   * Print a success message.
+   * @example
+   * logger.success('successfully created document')
+   */
   public success(message: string): void {
     this.logEntry({
       level: 'info',
@@ -99,6 +115,11 @@ export class Logger {
     })
   }
 
+  /**
+   * Print a warning.
+   * @example
+   * logger.warn('found legacy document format')
+   */
   public warn(message: string): void {
     this.logEntry({
       level: 'warn',
@@ -111,6 +132,11 @@ export class Logger {
     })
   }
 
+  /**
+   * Print an error message.
+   * @example
+   * logger.error('something went wrong')
+   */
   public error(message: string): void {
     this.logEntry({
       level: 'error',
@@ -127,8 +153,14 @@ export class Logger {
    * Execute the given callback only when the logging is enabled.
    * This is skipped in its entirety and has no runtime cost otherwise.
    * This executes regardless of the log level.
+   * @example
+   * logger.only(() => {
+   *   logger.info('additional info')
+   * })
    */
-  public only(callback: () => void): void {}
+  public only(callback: () => void): void {
+    callback()
+  }
 
   private createEntry(level: LogLevel, message: string): LogEntry {
     return {
@@ -235,6 +267,11 @@ function error(message: string): void {
   console.error(message)
 }
 
+/**
+ * Return an environmental variable value.
+ * When run in the browser, returns the value of the global variable
+ * of the same name.
+ */
 function getVariable(variableName: string): string | undefined {
   if (IS_NODE) {
     return process.env[variableName]
