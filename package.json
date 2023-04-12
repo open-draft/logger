@@ -23,7 +23,7 @@
   "scripts": {
     "build": "tsup",
     "test": "pnpm test:node && pnpm test:browser",
-    "test:node": "vitest watch",
+    "test:node": "vitest run",
     "test:browser": "playwright test"
   },
   "keywords": [],
