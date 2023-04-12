@@ -12,11 +12,21 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.CI_GITHUB_TOKEN }}
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
+          always-auth: true
+          registry-url: https://registry.npmjs.org
+
+      - name: Setup Git
+        run: |
+          git config --local user.name "Artem Zakharchenko"
+          git config --local user.email "kettanaito@gmail.com"
 
       - uses: pnpm/action-setup@v2
         with:
@@ -33,3 +43,10 @@ jobs:
 
       - name: Browser tests
         run: pnpm test:browser
+
+      - name: Release
+        if: github.ref == 'refs/heads/main'
+        run: pnpm release
+        env:
+          GITHUB_TOKEN: ${{ secrets.CI_GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

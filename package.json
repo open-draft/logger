@@ -1,5 +1,5 @@
 {
-  "name": "logger",
+  "name": "@open-draft/logger",
   "version": "0.0.0",
   "description": "Environment-agnostic, ESM-friendly logger for simple needs.",
   "main": "./lib/node/index.js",
@@ -24,7 +24,8 @@
     "build": "tsup",
     "test": "pnpm test:node && pnpm test:browser",
     "test:node": "vitest run",
-    "test:browser": "playwright test"
+    "test:browser": "playwright test",
+    "release": "release publish"
   },
   "keywords": [
     "log",
@@ -33,9 +34,13 @@
     "universal",
     "tiny"
   ],
+  "files": [
+    "lib"
+  ],
   "author": "Artem Zakharchenko",
   "license": "MIT",
   "devDependencies": {
+    "@ossjs/release": "^0.5.1",
     "@playwright/test": "^1.32.3",
     "@types/node": "^18.15.11",
     "playwright": "^1.32.3",
