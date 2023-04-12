@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@playwright/test': ^1.32.3
   '@types/node': ^18.15.11
   is-node-process: ^1.2.0
   typescript: ^5.0.3
@@ -10,6 +11,7 @@ dependencies:
   is-node-process: 1.2.0
 
 devDependencies:
+  '@playwright/test': 1.32.3
   '@types/node': 18.15.11
   typescript: 5.0.3
   vitest: 0.29.8
@@ -213,6 +215,17 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
+
+  /@playwright/test/1.32.3:
+    resolution: {integrity: sha512-BvWNvK0RfBriindxhLVabi8BRe3X0J9EVjKlcmhxjg4giWBD/xleLcg2dz7Tx0agu28rczjNIPQWznwzDwVsZQ==}
+    engines: {node: '>=14'}
+    hasBin: true
+    dependencies:
+      '@types/node': 18.15.11
+      playwright-core: 1.32.3
+    optionalDependencies:
+      fsevents: 2.3.2
+    dev: true
 
   /@types/chai-subset/1.3.3:
     resolution: {integrity: sha512-frBecisrNGz+F4T6bcc+NLeolfiojh5FxW2klu669+8BARtyQv2C/GkNW6FUodVe4BroGMP/wER/YDGc7rEllw==}
@@ -487,6 +500,12 @@ packages:
       jsonc-parser: 3.2.0
       mlly: 1.2.0
       pathe: 1.1.0
+    dev: true
+
+  /playwright-core/1.32.3:
+    resolution: {integrity: sha512-SB+cdrnu74ZIn5Ogh/8278ngEh9NEEV0vR4sJFmK04h2iZpybfbqBY0bX6+BLYWVdV12JLLI+JEFtSnYgR+mWg==}
+    engines: {node: '>=14'}
+    hasBin: true
     dev: true
 
   /postcss/8.4.21:

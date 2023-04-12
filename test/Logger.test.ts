@@ -13,14 +13,3 @@ it('prints an info message', async () => {
   log.warn('footer')
   log.info('got argument')
 })
-
-it.only('supports performance measuring', async () => {
-  const measureRequestEnd = logger.info('request start...')
-
-  await new Promise((resolve) => setTimeout(resolve, 100))
-
-  /**
-   * @fixme Vitest is erazing this output.
-   */
-  measureRequestEnd('request end')
-})

@@ -1,15 +1,17 @@
 {
   "name": "logger",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.0.0",
+  "description": "Environment-agnostic, ESM-friendly logger for simple needs.",
   "main": "index.js",
   "scripts": {
-    "test": "vitest watch"
+    "test": "vitest watch",
+    "test:browser": "playwright test"
   },
   "keywords": [],
   "author": "Artem Zakharchenko",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
+    "@playwright/test": "^1.32.3",
     "@types/node": "^18.15.11",
     "typescript": "^5.0.3",
     "vitest": "^0.29.8"
