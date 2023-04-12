@@ -4,6 +4,7 @@ specifiers:
   '@playwright/test': ^1.32.3
   '@types/node': ^18.15.11
   is-node-process: ^1.2.0
+  outvariant: ^1.4.0
   playwright: ^1.32.3
   tsup: ^6.7.0
   typescript: ^5.0.3
@@ -12,6 +13,7 @@ specifiers:
 
 dependencies:
   is-node-process: 1.2.0
+  outvariant: 1.4.0
 
 devDependencies:
   '@playwright/test': 1.32.3
@@ -1472,7 +1474,6 @@ packages:
 
   /outvariant/1.4.0:
     resolution: {integrity: sha512-AlWY719RF02ujitly7Kk/0QlV+pXGFDHrHf9O2OKqyqgBieaPOIeuSkL8sRK6j2WK+/ZAURq2kZsY0d8JapUiw==}
-    dev: true
 
   /p-limit/4.0.0:
     resolution: {integrity: sha512-5b0R4txpzjPWVw/cXXUResoD4hb6U/x9BH08L7nw+GN1sezDzPdxeRvpc9c433fZhBan/wusjbCsqwqm4EIBIQ==}

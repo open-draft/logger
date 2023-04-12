@@ -67,3 +67,36 @@ it('prints an error message', () => {
     `${colors.red('12:34:56:789')} ${colors.red('✖ [parser]')} oops\n`
   )
 })
+
+it('supports positionals', () => {
+  logger.debug('hello %s', 'world')
+  expect(process.stdout.write).toHaveBeenCalledWith(
+    `${colors.gray('12:34:56:789')} ${colors.gray('[parser]')} ${colors.gray(
+      'hello world'
+    )}\n`
+  )
+
+  logger.info('hello %s', 'world')
+  expect(process.stdout.write).toHaveBeenCalledWith(
+    `${colors.gray('12:34:56:789')} ${colors.blue('[parser]')} hello world\n`
+  )
+
+  logger.success('hello %s', 'world')
+  expect(process.stdout.write).toHaveBeenCalledWith(
+    `${colors.green('12:34:56:789')} ${colors.green(
+      '✔ [parser]'
+    )} hello world\n`
+  )
+
+  logger.warning('hello %s', 'world')
+  expect(process.stderr.write).toHaveBeenCalledWith(
+    `${colors.yellow('12:34:56:789')} ${colors.yellow(
+      '⚠ [parser]'
+    )} hello world\n`
+  )
+
+  logger.error('hello %s', 'world')
+  expect(process.stderr.write).toHaveBeenCalledWith(
+    `${colors.red('12:34:56:789')} ${colors.red('✖ [parser]')} hello world\n`
+  )
+})

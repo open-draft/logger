@@ -45,6 +45,7 @@
     "webpack-http-server": "^0.5.0"
   },
   "dependencies": {
-    "is-node-process": "^1.2.0"
+    "is-node-process": "^1.2.0",
+    "outvariant": "^1.4.0"
   }
 }

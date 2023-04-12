@@ -1,4 +1,5 @@
 import { isNodeProcess } from 'is-node-process'
+import { format } from 'outvariant'
 import * as colors from './colors'
 
 const IS_NODE = isNodeProcess()
@@ -259,7 +260,7 @@ const noop = () => void 0
 
 function log(message: string, ...positionals: Array<unknown>): void {
   if (IS_NODE) {
-    process.stdout.write(message + '\n')
+    process.stdout.write(format(message, ...positionals) + '\n')
     return
   }
 
@@ -268,7 +269,7 @@ function log(message: string, ...positionals: Array<unknown>): void {
 
 function warn(message: string, ...positionals: Array<unknown>): void {
   if (IS_NODE) {
-    process.stderr.write(message + '\n')
+    process.stderr.write(format(message, ...positionals) + '\n')
     return
   }
 
@@ -277,7 +278,7 @@ function warn(message: string, ...positionals: Array<unknown>): void {
 
 function error(message: string, ...positionals: Array<unknown>): void {
   if (IS_NODE) {
-    process.stderr.write(message + '\n')
+    process.stderr.write(format(message, ...positionals) + '\n')
     return
   }
 
