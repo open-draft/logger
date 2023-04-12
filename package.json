@@ -26,7 +26,13 @@
     "test:node": "vitest run",
     "test:browser": "playwright test"
   },
-  "keywords": [],
+  "keywords": [
+    "log",
+    "logger",
+    "logging",
+    "universal",
+    "tiny"
+  ],
   "author": "Artem Zakharchenko",
   "license": "MIT",
   "devDependencies": {
