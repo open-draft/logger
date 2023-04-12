@@ -30,11 +30,13 @@ logger.success('parsed 120 documents!')
 
 - Class: `Logger`
   - [`new Logger(name)`](#new-loggername)
+  - [`logger.debug(message)`](#loggerdebugmessage)
   - [`logger.info(message)`](#loggerinfomessage)
   - [`logger.success(message)`](#loggersuccessmessage)
   - [`logger.warning(message)`](#loggerwarningmessage)
   - [`logger.error(message)`](#loggererrormessage)
   - [`logger.extend(name)`](#loggerextendprefix)
+  - [`logger.only(callback)`](#loggeronlycallback)
 
 ### `new Logger(name)`
 
@@ -47,6 +49,20 @@ const logger = new Logger('parser')
 ```
 
 > You can nest loggers via [`logger.extend()`](#loggerextendprefix).
+
+### `logger.debug(message)`
+
+- `message` `string`
+
+Prints a debug message.
+
+```js
+logger.debug('no duplicates found, skipping...')
+```
+
+```
+12:34:56:789 [parser] no duplicates found, skipping...
+```
 
 ### `logger.info(message)`
 
@@ -122,3 +138,16 @@ function parseRequest(request) {
 ```
 12:34:56:789 [parser] [GET https://example.com] start parsing...
 ```
+
+### `logger.only(callback)`
+
+Executes a given callback only when the logging is activated. Useful for computing additional information for logs.
+
+```js
+logger.only(() => {
+  const documentSize = getSizeBytes(document)
+  logger.debug(`document size: ${documentSize}`)
+})
+```
+
+> You can nest `logger.*` methods in the callback to `logger.only()`.
