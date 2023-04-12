@@ -1,7 +1,14 @@
 import { Config } from '@playwright/test'
 
 const config: Config = {
-  testMatch: 'test/browser/**/*.test.ts',
+  testDir: 'test/browser',
+  use: {
+    launchOptions: {
+      devtools: true,
+    },
+  },
+  forbidOnly: !!process.env.CI,
+  fullyParallel: true,
 }
 
 export default config

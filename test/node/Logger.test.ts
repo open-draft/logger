@@ -9,7 +9,7 @@ beforeAll(() => {
   vi.spyOn(process.stdout, 'write')
   vi.spyOn(process.stderr, 'write')
   vi.useFakeTimers()
-  vi.setSystemTime(new Date(2023, 3, 1, 12, 34, 45, 678))
+  vi.setSystemTime(new Date(2023, 3, 1, 12, 34, 56, 789))
 })
 
 afterEach(() => {
@@ -26,7 +26,7 @@ it('prints a single info message', () => {
   logger.info('hello world')
 
   expect(process.stdout.write).toHaveBeenCalledWith(
-    `${colors.gray('12:34:45:678')} ${colors.blue('[parser]')} hello world\n`
+    `${colors.gray('12:34:56:789')} ${colors.blue('[parser]')} hello world\n`
   )
 })
 
@@ -35,10 +35,10 @@ it('prints multiple info messages', () => {
   logger.info('hello world')
 
   expect(process.stdout.write).toHaveBeenCalledWith(
-    `${colors.gray('12:34:45:678')} ${colors.blue('[parser]')} hello world\n`
+    `${colors.gray('12:34:56:789')} ${colors.blue('[parser]')} hello world\n`
   )
   expect(process.stdout.write).toHaveBeenCalledWith(
-    `${colors.gray('12:34:45:678')} ${colors.blue('[parser]')} hello world\n`
+    `${colors.gray('12:34:56:789')} ${colors.blue('[parser]')} hello world\n`
   )
 })
 
@@ -46,7 +46,7 @@ it('prints a success message', () => {
   logger.success('ok!')
 
   expect(process.stdout.write).toHaveBeenCalledWith(
-    `${colors.green('12:34:45:678')} ${colors.green('✔ [parser]')} ok!\n`
+    `${colors.green('12:34:56:789')} ${colors.green('✔ [parser]')} ok!\n`
   )
 })
 
@@ -54,7 +54,7 @@ it('prints a warning message', () => {
   logger.warn('simple warning')
 
   expect(process.stderr.write).toHaveBeenCalledWith(
-    `${colors.yellow('12:34:45:678')} ${colors.yellow(
+    `${colors.yellow('12:34:56:789')} ${colors.yellow(
       '⚠ [parser]'
     )} simple warning\n`
   )
@@ -64,6 +64,6 @@ it('prints an error message', () => {
   logger.error('oops')
 
   expect(process.stderr.write).toHaveBeenCalledWith(
-    `${colors.red('12:34:45:678')} ${colors.red('✖ [parser]')} oops\n`
+    `${colors.red('12:34:56:789')} ${colors.red('✖ [parser]')} oops\n`
   )
 })

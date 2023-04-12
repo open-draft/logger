@@ -3,9 +3,6 @@ import * as colors from './colors'
 
 const IS_NODE = isNodeProcess()
 
-const LOGGER_NAME = getVariable('DEBUG')
-const LOGGER_LEVEL = getVariable('LOG_LEVEL') as LogLevel | undefined
-
 export type LogLevel = 'debug' | 'info' | 'success' | 'warn' | 'error'
 
 export type LogColors = keyof typeof colors
@@ -21,6 +18,9 @@ export class Logger {
 
   constructor(private readonly name: string) {
     this.prefix = `[${this.name}]`
+
+    const LOGGER_NAME = getVariable('DEBUG')
+    const LOGGER_LEVEL = getVariable('LOG_LEVEL') as LogLevel | undefined
 
     const isLoggingEnabled =
       LOGGER_NAME === '1' ||
@@ -236,11 +236,11 @@ function error(message: string): void {
 }
 
 function getVariable(variableName: string): string | undefined {
-  if (typeof process !== 'undefined') {
+  if (IS_NODE) {
     return process.env[variableName]
   }
 
-  return globalThis[variableName]
+  return globalThis[variableName]?.toString()
 }
 
 function isDefinedAndNotEquals(

@@ -22,7 +22,8 @@
   },
   "scripts": {
     "build": "tsup",
-    "test": "vitest watch",
+    "test": "pnpm test:node && pnpm test:browser",
+    "test:node": "vitest watch",
     "test:browser": "playwright test"
   },
   "keywords": [],
@@ -31,9 +32,11 @@
   "devDependencies": {
     "@playwright/test": "^1.32.3",
     "@types/node": "^18.15.11",
+    "playwright": "^1.32.3",
     "tsup": "^6.7.0",
     "typescript": "^5.0.3",
-    "vitest": "^0.29.8"
+    "vitest": "^0.29.8",
+    "webpack-http-server": "^0.5.0"
   },
   "dependencies": {
     "is-node-process": "^1.2.0"
