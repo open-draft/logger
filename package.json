@@ -1,6 +1,6 @@
 {
   "name": "@open-draft/logger",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Environment-agnostic, ESM-friendly logger for simple needs.",
   "main": "./lib/node/index.js",
   "module": "./lib/node/index.mjs",
