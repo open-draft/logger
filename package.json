@@ -35,7 +35,9 @@
     "tiny"
   ],
   "files": [
-    "lib"
+    "lib",
+    "LICENSE",
+    "README.md"
   ],
   "author": "Artem Zakharchenko",
   "license": "MIT",
