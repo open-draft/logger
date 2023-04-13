@@ -11,7 +11,7 @@ export type LogColors = keyof typeof colors
 export interface LogEntry {
   timestamp: Date
   level: LogLevel
-  message: string
+  message: any
 }
 
 export class Logger {
@@ -60,7 +60,7 @@ export class Logger {
    * @example
    * logger.debug('no duplicates found, creating a document...')
    */
-  public debug(message: string, ...positionals: Array<unknown>): void {
+  public debug(message: any, ...positionals: Array<unknown>): void {
     this.logEntry({
       level: 'debug',
       message: colors.gray(message),
@@ -77,7 +77,7 @@ export class Logger {
    * @example
    * logger.info('start parsing...')
    */
-  public info(message: string, ...positionals: Array<unknown>) {
+  public info(message: any, ...positionals: Array<unknown>) {
     this.logEntry({
       level: 'info',
       message,
@@ -90,7 +90,7 @@ export class Logger {
 
     const performance = new PerformanceEntry()
 
-    return (message: string, ...positionals: Array<unknown>) => {
+    return (message: any, ...positionals: Array<unknown>) => {
       performance.measure()
 
       this.logEntry({
@@ -110,7 +110,7 @@ export class Logger {
    * @example
    * logger.success('successfully created document')
    */
-  public success(message: string, ...positionals: Array<unknown>): void {
+  public success(message: any, ...positionals: Array<unknown>): void {
     this.logEntry({
       level: 'info',
       message,
@@ -128,7 +128,7 @@ export class Logger {
    * @example
    * logger.warning('found legacy document format')
    */
-  public warning(message: string, ...positionals: Array<unknown>): void {
+  public warning(message: any, ...positionals: Array<unknown>): void {
     this.logEntry({
       level: 'warning',
       message,
@@ -146,7 +146,7 @@ export class Logger {
    * @example
    * logger.error('something went wrong')
    */
-  public error(message: string, ...positionals: Array<unknown>): void {
+  public error(message: any, ...positionals: Array<unknown>): void {
     this.logEntry({
       level: 'error',
       message,
@@ -172,7 +172,7 @@ export class Logger {
     callback()
   }
 
-  private createEntry(level: LogLevel, message: string): LogEntry {
+  private createEntry(level: LogLevel, message: unknown): LogEntry {
     return {
       timestamp: new Date(),
       level,
@@ -182,7 +182,7 @@ export class Logger {
 
   private logEntry(args: {
     level: LogLevel
-    message: string
+    message: unknown
     positionals?: Array<unknown>
     prefix?: string
     colors?: {
@@ -211,7 +211,7 @@ export class Logger {
     write(
       [colorize.timestamp(this.formatTimestamp(entry.timestamp))]
         .concat(prefix != null ? colorize.prefix(prefix) : [])
-        .concat(message)
+        .concat(message as string)
         .join(' '),
       ...positionals
     )
