@@ -100,3 +100,19 @@ it('supports positionals', () => {
     `${colors.red('12:34:56:789')} ${colors.red('✖ [parser]')} hello world\n`
   )
 })
+
+it('serializes the input message', () => {
+  logger.info({ hello: 'world' })
+  expect(process.stdout.write).toHaveBeenCalledWith(
+    `${colors.gray('12:34:56:789')} ${colors.blue(
+      '[parser]'
+    )} {"hello":"world"}\n`
+  )
+
+  logger.info([1, 'two', { three: 3 }])
+  expect(process.stdout.write).toHaveBeenCalledWith(
+    `${colors.gray('12:34:56:789')} ${colors.blue(
+      '[parser]'
+    )} [1,"two",{"three":3}]\n`
+  )
+})
