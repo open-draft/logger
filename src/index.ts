@@ -211,9 +211,9 @@ export class Logger {
     write(
       [colorize.timestamp(this.formatTimestamp(entry.timestamp))]
         .concat(prefix != null ? colorize.prefix(prefix) : [])
-        .concat(message as string)
+        .concat(serializeInput(message))
         .join(' '),
-      ...positionals
+      ...positionals.map(serializeInput)
     )
   }
 
@@ -303,4 +303,24 @@ function isDefinedAndNotEquals(
   expected: string
 ): boolean {
   return value !== undefined && value !== expected
+}
+
+function serializeInput(message: any): string {
+  if (typeof message === 'undefined') {
+    return 'undefined'
+  }
+
+  if (message === null) {
+    return 'null'
+  }
+
+  if (typeof message === 'string') {
+    return message
+  }
+
+  if (typeof message === 'object') {
+    return JSON.stringify(message)
+  }
+
+  return message.toString()
 }
