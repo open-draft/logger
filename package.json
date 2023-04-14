@@ -7,18 +7,21 @@
   "browser": "./lib/browser/index.js",
   "types": "./lib/node/index.d.ts",
   "exports": {
-    "browser": {
-      "types": "./lib/browser/index.d.ts",
-      "import": "./lib/browser/index.mjs",
-      "require": "./lib/browser/index.js",
-      "default": "./lib/browser/index.js"
+    ".": {
+      "browser": {
+        "types": "./lib/browser/index.d.ts",
+        "import": "./lib/browser/index.mjs",
+        "require": "./lib/browser/index.js",
+        "default": "./lib/browser/index.js"
+      },
+      "node": {
+        "types": "./lib/node/index.d.ts",
+        "import": "./lib/node/index.mjs",
+        "require": "./lib/node/index.js",
+        "default": "./lib/node/index.js"
+      }
     },
-    "node": {
-      "types": "./lib/node/index.d.ts",
-      "import": "./lib/node/index.mjs",
-      "require": "./lib/node/index.js",
-      "default": "./lib/node/index.js"
-    }
+    "./package.json": "./package.json"
   },
   "scripts": {
     "build": "tsup",
