@@ -1,21 +1,10 @@
 import { defineConfig } from 'tsup'
 
-const nodeConfig = defineConfig({
+export default defineConfig({
   entry: ['src/index.ts'],
-  platform: 'node',
+  platform: 'neutral',
   format: ['esm', 'cjs'],
-  outDir: './lib/node',
+  outDir: './lib',
   bundle: true,
   dts: true,
 })
-
-const browserConfig = defineConfig({
-  entry: ['src/index.ts'],
-  platform: 'browser',
-  format: ['esm', 'cjs'],
-  outDir: './lib/browser',
-  bundle: true,
-  dts: true,
-})
-
-export default [nodeConfig, browserConfig]
