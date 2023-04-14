@@ -46,7 +46,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/open-draft/deferred-promise"
+    "url": "https://github.com/open-draft/logger"
   },
   "devDependencies": {
     "@ossjs/release": "^0.5.1",
